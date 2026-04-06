@@ -39,6 +39,10 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || 'Internal server error' });
 });
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server running on port ${process.env.PORT}`)
-);
+if (require.main === module) {
+  app.listen(process.env.PORT || 5000, () =>
+    console.log(`Server running on port ${process.env.PORT || 5000}`)
+  );
+}
+
+module.exports = app;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
+const api = axios.create({ baseURL: process.env.REACT_APP_API_URL || '/api' });
 
 // Attach JWT to every request
 api.interceptors.request.use((config) => {
@@ -57,7 +57,7 @@ export const budgetAPI = {
 };
 
 // Guard against non-http(s) base URLs (SSRF mitigation for the REACT_APP_API_URL env var)
-const _base = process.env.REACT_APP_API_URL || '';
+const _base = process.env.REACT_APP_API_URL || '/api';
 if (_base && !new RegExp('^https?://', 'i').test(_base)) {
   console.error('[api] REACT_APP_API_URL must start with http:// or https://');
 }
