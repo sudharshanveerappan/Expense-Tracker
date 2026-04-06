@@ -10,10 +10,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/expenses', require('./routes/expenses'));
-app.use('/api/budgets', require('./routes/budgets'));
-app.use('/api/chat', require('./routes/chat'));
+const apiRoutes = express.Router();
+apiRoutes.use('/auth', require('./routes/auth'));
+apiRoutes.use('/expenses', require('./routes/expenses'));
+apiRoutes.use('/budgets', require('./routes/budgets'));
+apiRoutes.use('/chat', require('./routes/chat'));
+
+// Vercel auto-strips the /api prefix, so we mount at / for production, and /api for local dev
+app.use('/api', apiRoutes);
+app.use('/', apiRoutes);
 
 // Warn early if Ollama is unreachable — non-fatal, server still starts
 const { checkOllamaHealth } = require('./services/ollamaService');
