@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { @apply box-border; }
+  body { @apply bg-gray-50 text-gray-900 antialiased; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400; }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700
+           focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent
+           transition bg-white placeholder-gray-400;
+  }
+  .label {
+    @apply block text-xs font-medium text-gray-500 mb-1;
+  }
+  .btn-primary {
+    @apply bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700
+           active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-ghost {
+    @apply border border-gray-200 text-gray-600 rounded-xl hover:bg-gray-50
+           active:scale-95 transition;
+  }
+  .card {
+    @apply bg-white rounded-2xl border border-gray-100 shadow-sm;
+  }
+  .skeleton {
+    @apply bg-gray-200 rounded-lg animate-pulse;
+  }
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4;
+  }
+  .modal-panel {
+    @apply bg-white rounded-2xl shadow-2xl w-full max-w-md p-6
+           animate-[modalIn_0.2s_ease-out];
+  }
+
+  /* ── Chat bubbles ─────────────────────────────────────────────────────── */
+  .chat-bubble-user {
+    @apply bg-indigo-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm;
+  }
+  /* Fixed: was referenced as .chat-bubble in JSX but only .chat-bubble-ai existed */
+  .chat-bubble {
+    @apply bg-white border border-gray-100 shadow-sm text-gray-800
+           rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm;
+  }
+  .chat-bubble-ai {
+    @apply bg-white border border-gray-100 shadow-sm text-gray-800
+           rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm;
+  }
+
+  /* ── Floating chat panel ──────────────────────────────────────────────── */
+  .chat-panel {
+    @apply fixed z-50 flex flex-col bg-white shadow-2xl border border-gray-200
+           /* desktop: right sidebar */
+           bottom-0 right-0 top-14 w-[380px] rounded-tl-2xl
+           animate-[panelSlideIn_0.25s_ease-out];
+  }
+  /* Mobile: full-width bottom sheet */
+  @media (max-width: 640px) {
+    .chat-panel {
+      @apply top-auto bottom-0 left-0 right-0 w-full h-[85vh] rounded-t-2xl rounded-bl-none;
+    }
+  }
+
+  .chat-fab {
+    @apply fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-indigo-600 text-white
+           shadow-lg hover:bg-indigo-700 active:scale-95 transition flex items-center justify-center
+           text-2xl;
+  }
+
+  .th-sortable {
+    @apply cursor-pointer select-none hover:text-indigo-600 transition-colors;
+  }
+}
+
+@layer utilities {
+  .progress-bar {
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 640px) {
+  @keyframes panelSlideIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out both;
+}
